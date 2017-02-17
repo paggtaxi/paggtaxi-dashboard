@@ -1,0 +1,51 @@
+<div class="app flex-row align-items-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card-group mb-0">
+                    <div class="card p-1">
+                        <div class="card-block">
+                            <div class="row justify-content-center">
+                                <div class="logo-paggtaxi-md"></div>
+                            </div>
+                            <div class="strike">
+                                <span>Entrar</span>
+                            </div>
+                            <div class="alert alert-danger" *ngIf="errorMessage">
+                                {{errorMessage}}
+                            </div>
+                            <form (ngSubmit)="submitLogin(loginForm)" #loginForm="ngForm">
+                                <div class="input-group mb-1">
+                                <span class="input-group-addon"><i class="icon-user"></i>
+                                </span>
+                                    <input type="text" required [(ngModel)]="form.username" name="username"
+                                           class="form-control"
+                                           placeholder="E-mail">
+                                </div>
+                                <div class="input-group mb-2">
+                                <span class="input-group-addon"><i class="icon-lock"></i>
+                                </span>
+                                    <input type="password" required [(ngModel)]="form.password" name="password"
+                                           class="form-control"
+                                           placeholder="Senha">
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <button type="submit" class="btn btn-primary px-2 btn-ladda"
+                                                data-style="zoom-in"
+                                                [disabled]="isLoading"
+                                                [ladda]='isLoading'>Entrar
+                                        </button>
+                                    </div>
+                                    <div class="col-6 text-right">
+                                        <button type="button" class="btn btn-link px-0">Esqueceu a sua senha?</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
