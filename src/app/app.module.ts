@@ -21,6 +21,7 @@ import { SimpleLayoutComponent } from './layouts/simple-layout.component';
 import { AuthGuard } from "./auth/auth-guard.service";
 import { AuthService } from "./auth/auth.service";
 import { HttpModule } from "@angular/http";
+import { AuthModule } from "./auth/auth.module";
 
 @NgModule({
   imports: [
@@ -29,7 +30,8 @@ import { HttpModule } from "@angular/http";
     DropdownModule.forRoot(),
     TabsModule.forRoot(),
     ChartsModule,
-    HttpModule
+    HttpModule,
+    AuthModule
   ],
   declarations: [
     AppComponent,

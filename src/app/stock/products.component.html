@@ -33,17 +33,22 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>Celular Samsung Galaxy Pocket Plus</td>
-                            <td>25</td>
-                            <td>R$ 400,00</td>
-                            <td>Em 20/11 Compra efetuada pelo Thiago</td>
-                            <td class="text-center">
-                                <i class="fa fa-circle text-success"></i>
-                            </td>
-                            <td class="text-center">
-                                <i class="fa fa-circle text-danger"></i>
-                            </td>
+                        <tr *ngFor="let product of products">
+                            <td>{{ product.name }}</td>
+                            <td>{{ product.price }}</td>
+                            <td>{{ product.price }}</td>
+                            <td>{{ product.observation }}</td>
+                            <td>{{ product.isActive }}</td>
+                            <td>{{ product.hasConsignment }}</td>
+                            <!--<td>25</td>-->
+                            <!--<td>R$ 400,00</td>-->
+                            <!--<td>Em 20/11 Compra efetuada pelo Thiago</td>-->
+                            <!--<td class="text-center">-->
+                                <!--<i class="fa fa-circle text-success"></i>-->
+                            <!--</td>-->
+                            <!--<td class="text-center">-->
+                                <!--<i class="fa fa-circle text-danger"></i>-->
+                            <!--</td>-->
                             <td>
                                 <a href class="btn btn-link"><i class="fa fa-edit"></i> editar</a>
                                 <a href class="btn btn-link"><i class="fa fa-download"></i> entradas</a>
