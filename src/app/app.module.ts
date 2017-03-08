@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
@@ -22,6 +22,8 @@ import { AuthGuard } from "./auth/auth-guard.service";
 import { AuthService } from "./auth/auth.service";
 import { HttpModule } from "@angular/http";
 import { AuthModule } from "./auth/auth.module";
+import { Logger, ConsoleLogService } from "./shared/logger";
+import { Ng2SmartTableModule } from "ng2-smart-table";
 
 @NgModule({
   imports: [
@@ -31,7 +33,8 @@ import { AuthModule } from "./auth/auth.module";
     TabsModule.forRoot(),
     ChartsModule,
     HttpModule,
-    AuthModule
+    AuthModule,
+    Ng2SmartTableModule
   ],
   declarations: [
     AppComponent,
@@ -43,6 +46,14 @@ import { AuthModule } from "./auth/auth.module";
     AsideToggleDirective
   ],
   providers: [
+    {
+      provide: LOCALE_ID,
+      useValue: 'pt-BR'
+    },
+    {
+      provide: Logger,
+      useClass: ConsoleLogService
+    },
     {
       provide: LocationStrategy,
       useClass: HashLocationStrategy

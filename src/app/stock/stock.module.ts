@@ -3,6 +3,8 @@ import { CommonModule } from "@angular/common";
 import { StockRoutingModule } from "./stock-routing.module";
 import { StockProductsComponent } from "./products.component";
 import { ProductsService } from "./products.service";
+import { BooleanImgPipe } from "../shared/pipe/boolean-img.pipe";
+import { CurrencyFormatPipe } from "../shared/pipe/currency-format.pipe";
 
 @NgModule({
   imports: [
@@ -10,7 +12,9 @@ import { ProductsService } from "./products.service";
     StockRoutingModule
   ],
   declarations: [
-    StockProductsComponent
+    StockProductsComponent,
+    BooleanImgPipe,
+    CurrencyFormatPipe
   ],
   providers: [
     ProductsService

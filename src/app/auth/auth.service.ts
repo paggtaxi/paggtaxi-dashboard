@@ -3,29 +3,44 @@ import { tokenNotExpired } from "angular2-jwt";
 import { Router } from "@angular/router";
 import "rxjs/add/operator/toPromise";
 import { Http } from "@angular/http";
+import { AppSettings } from "../app-settings";
 
 @Injectable()
 export class AuthService {
+  static TOKEN_NAME = 'id_token';
 
   constructor(private router: Router, private http: Http) {
   }
 
   login(username: string, password: string): Promise<any> {
-    return this.http.post('http://127.0.0.1:8000/api/api-token-auth/', {
+    return this.http.post(`${AppSettings.API_ENDPOINT}${AppSettings.API_LOGIN}`, {
       username: username,
       password: password
     })
       .toPromise()
       .then((response) => {
-        console.log('AuthService.then');
         let responseJson = response.json();
-        console.log(responseJson);
-        localStorage.setItem('id_token', responseJson.token);
-        localStorage.setItem('profile', responseJson.user);
+        this.setToken(responseJson.token);
+        this.setUser(responseJson.user);
         return responseJson;
       })
       .catch((error) => {
-        console.log('AuthService.catch');
+        return Promise.reject(error.message || error);
+      })
+  }
+
+  updateCredentials() {
+    this.http.post(`${AppSettings.API_ENDPOINT}${AppSettings.API_REFRESH_TOKEN}`, {
+      token: this.getToken()
+    })
+      .toPromise()
+      .then((response) => {
+        let responseJson = response.json();
+        this.setToken(responseJson.token);
+        this.setUser(responseJson.user);
+        return responseJson;
+      })
+      .catch((error) => {
         return Promise.reject(error.message || error);
       })
   }
@@ -35,8 +50,8 @@ export class AuthService {
     // To log out, just remove the token and profile
     // from local storage
     localStorage.removeItem('profile');
-    localStorage.removeItem('id_token');
-    console.log('logout');
+    localStorage.removeItem('next_refresh');
+    localStorage.removeItem(AuthService.TOKEN_NAME);
     // Send the user back to the public deals page after logout
     this.router.navigate(['/auth/login']);
   }
@@ -45,4 +60,37 @@ export class AuthService {
   loggedIn() {
     return tokenNotExpired();
   }
+
+  getUser() {
+    localStorage.getItem('profile');
+  }
+
+  setUser(user) {
+    localStorage.setItem('profile', user);
+  }
+
+  setToken(token) {
+    let nextRefresh: any = new Date();
+    localStorage.setItem('next_refresh', nextRefresh.addMinutes(30));
+    localStorage.setItem(AuthService.TOKEN_NAME, token);
+  }
+
+  getToken() {
+    return localStorage.getItem(AuthService.TOKEN_NAME);
+  }
+
+  getNextRefresh() {
+    return localStorage.getItem('next_refresh');
+  }
+
+  mustUpdateToken() {
+    let nextRefresh: any = this.getNextRefresh();
+    if (nextRefresh) {
+      nextRefresh = new Date(nextRefresh);
+      return nextRefresh.toString() === 'Invalid Date' || (nextRefresh.getTime() <= new Date().getTime());
+    }
+    // not has next refresh key, must update
+    return true;
+  }
+
 }
