@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import "rxjs/add/operator/toPromise";
 import { Http } from "@angular/http";
 import { AppSettings } from "../app-settings";
+import { User } from "../shared/models/user.model";
 
 @Injectable()
 export class AuthService {
@@ -61,12 +62,12 @@ export class AuthService {
     return tokenNotExpired();
   }
 
-  getUser() {
-    localStorage.getItem('profile');
+  getUser(): User {
+    return <User> JSON.parse(localStorage.getItem('profile'));
   }
 
   setUser(user) {
-    localStorage.setItem('profile', user);
+    localStorage.setItem('profile', JSON.stringify(user));
   }
 
   setToken(token) {
@@ -75,11 +76,11 @@ export class AuthService {
     localStorage.setItem(AuthService.TOKEN_NAME, token);
   }
 
-  getToken() {
+  getToken(): string {
     return localStorage.getItem(AuthService.TOKEN_NAME);
   }
 
-  getNextRefresh() {
+  getNextRefresh(): string {
     return localStorage.getItem('next_refresh');
   }
 

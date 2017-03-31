@@ -1,0 +1,33 @@
+<div class="card-controls">
+    <fieldset *ngIf="isSelectDateUsed" class="form-group float-right">
+        <div class="input-group float-right">
+            <label class="input-group-addon" for="datarange">
+                <i class="fa fa-calendar"></i>
+            </label>
+            <input daterangepicker
+                   type="text"
+                   id="datarange"
+                   readonly
+                   name="daterange"
+                   [options]="{startDate: params.start_date, endDate: params.end_date}"
+                   (selected)="onselectDate($event)"
+                   class="form-control date-picker">
+        </div>
+    </fieldset>
+    <form *ngIf="isRunSearchUsed" (submit)="onrunSearch($event)">
+        <fieldset class="form-group float-right">
+            <div class="input-group float-right">
+                <input
+                        type="search"
+                        id="search"
+                        name="search"
+                        placeholder="Buscar ..."
+                        [(ngModel)]="params.search"
+                        class="form-control">
+                <button class="input-group-addon" type="submit">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+        </fieldset>
+    </form>
+</div>

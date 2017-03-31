@@ -8,30 +8,31 @@
         </li>
 
     </ul>
-    <form class="form-inline px-2 hidden-md-down">
-        <div class="input-group">
-            <div class="input-group-btn" dropdown>
-                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false" dropdownToggle>
-                    Pesquisar
-                </button>
-                <div class="dropdown-menu" dropdownMenu>
-                    <a class="dropdown-item" href="#">Taxista</a>
-                    <a class="dropdown-item" href="#">Empresa</a>
-                    <a class="dropdown-item" href="#">Voucher</a>
-                    <a class="dropdown-item" href="#">Transações</a>
-                </div>
-            </div>
-            <input type="text" class="form-control" aria-label="Text input with dropdown button" placeholder="....">
-            <span class="input-group-btn">
-                <button class="btn" type="button"><i class="fa fa-search"></i>
-                </button>
-            </span>
-        </div>
-    </form>
+    <!--<form class="form-inline px-2 hidden-md-down">-->
+    <!--<div class="input-group">-->
+    <!--<div class="input-group-btn" dropdown>-->
+    <!--<button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"-->
+    <!--aria-expanded="false" dropdownToggle>-->
+    <!--Pesquisar-->
+    <!--</button>-->
+    <!--<div class="dropdown-menu" dropdownMenu>-->
+    <!--<a class="dropdown-item" href="#">Taxista</a>-->
+    <!--<a class="dropdown-item" href="#">Empresa</a>-->
+    <!--<a class="dropdown-item" href="#">Voucher</a>-->
+    <!--<a class="dropdown-item" href="#">Transações</a>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<input type="text" class="form-control" aria-label="Text input with dropdown button" placeholder="....">-->
+    <!--<span class="input-group-btn">-->
+    <!--<button class="btn" type="button"><i class="fa fa-search"></i>-->
+    <!--</button>-->
+    <!--</span>-->
+    <!--</div>-->
+    <!--</form>-->
     <ul class="nav navbar-nav ml-auto">
         <li class="p-2">
-            <button type="button" (click)="logout()" class="btn btn-primary"><i class="fa fa-sign-out"></i> Sair</button>
+            <button type="button" (click)="logout()" class="btn btn-primary"><i class="fa fa-sign-out"></i> Sair
+            </button>
         </li>
     </ul>
 
@@ -50,8 +51,14 @@
                     <a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-shopping-cart"></i> Estoque</a>
                     <ul class="nav-dropdown-items">
                         <li class="nav-item">
-                            <a class="nav-link" routerLinkActive="active" [routerLink]="['/estoque/produtos']"><i
-                                    class="fa fa-calculator"></i> Produtos</a>
+                            <a class="nav-link" routerLinkActive="active" [routerLink]="['/estoque/produtos']">
+                                Produtos
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLinkActive="active" [routerLink]="['/estoque/entradas-produtos']">
+                                Entradas
+                            </a>
                         </li>
                     </ul>
                 </li>
@@ -78,3 +85,5 @@
 <footer class="app-footer">
     <a href="https://paggtaxi.com.br">Paggtaxi</a> &copy; 2016.
 </footer>
+
+<toaster-container [toasterconfig]="toasterconfig"></toaster-container>

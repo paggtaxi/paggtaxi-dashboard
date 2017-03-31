@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
 import { AuthService } from "../auth/auth.service";
+import { ToasterConfig } from "angular2-toaster";
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,6 +10,17 @@ export class FullLayoutComponent implements OnInit {
 
   constructor(private auth: AuthService) {
   }
+
+  public toasterconfig: ToasterConfig =
+    new ToasterConfig({
+      tapToDismiss: true,
+      timeout: 5000,
+      preventDuplicates: true,
+      showCloseButton: false,
+      newestOnTop: true,
+      mouseoverTimerStop: true,
+      positionClass: 'toast-top-center'
+    });
 
   public disabled: boolean = false;
   public status: {isopen: boolean} = {isopen: false};

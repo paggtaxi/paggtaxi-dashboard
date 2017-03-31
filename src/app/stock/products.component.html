@@ -1,71 +1,69 @@
 <div class="animated fadeIn">
 
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="action-card">
-                <button class="btn btn-link" type="button"><i class="fa fa-plus"></i> novo produto</button>
-                <button class="btn btn-link" type="button"><i class="fa fa-download"></i> efetuar entrada</button>
-                <button class="btn btn-link" type="button"><i class="fa fa-upload"></i> efetuar saída</button>
-                <button class="btn btn-link" type="button"><i class="fa fa-handshake-o"></i> efetuar comodato</button>
-            </div>
-        </div>
-    </div>
+    <stock-menu></stock-menu>
 
     <hr>
 
     <div class="row">
         <div class="col-lg-12">
-            <div class="card">
+            <div class="card" [class.card-loading]="isLoading()">
                 <div class="card-header">
-                    <i class="fa fa-calculator"></i> Produtos
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <h3 class="card-header-title"><i class="fa fa-calculator"></i> Produtos</h3>
+                        </div>
+                        <div class="col-sm-7">
+                            <card-header-controls
+                                    [params]="params"
+                                    (runSearch)="search($event)">
+                            </card-header-controls>
+                        </div>
+
+                    </div>
                 </div>
                 <div class="card-block">
-                    <table class="table table-bordered table-striped table-condensed">
-                        <thead>
-                        <tr>
-                            <th (click)="sortColumn('created')" width="30" i18n>Criado em</th>
-                            <th width="30">Produto</th>
-                            <th width="10">Quantidade</th>
-                            <th width="10">Valor</th>
-                            <th width="10">Ativo</th>
-                            <th width="10">Permite Comodato</th>
-                            <th width="30">Ações</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr *ngFor="let product of products">
-                            <td>{{ product.created | date: 'short' }}</td>
-                            <td>{{ product.name }}</td>
-                            <td>{{ product.amount }}</td>
-                            <td>{{ product.price | currencyformat }}</td>
-                            <td [innerHTML]="product.is_active | booleanImg"></td>
-                            <td [innerHTML]="product.has_consignment | booleanImg"></td>
-                            <td>
-                                <a href class="btn btn-link"><i class="fa fa-edit"></i> editar</a>
-                                <a href class="btn btn-link"><i class="fa fa-download"></i> entradas</a>
-                                <a href class="btn btn-link"><i class="fa fa-upload"></i> saídas</a>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-
-
                     <div class="row">
-                        <ul class="pagination centered">
-                            <li class="page-item"><a class="page-link" href="#">Anterior</a>
-                            </li>
-                            <li class="page-item active">
-                                <a class="page-link" href="#">1</a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">2</a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">3</a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">4</a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">Próximo</a>
-                            </li>
-                        </ul>
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-condensed">
+                                <thead>
+                                <tr tableOrdering (sortColumn)="sortColumn($event)">
+                                    <th data-column="created" width="30">Criado em</th>
+                                    <th data-column="name" width="30">Produto</th>
+                                    <th data-column="price" width="10">Valor</th>
+                                    <th data-column="is_active" width="10">Ativo</th>
+                                    <th data-column="has_consignment" width="10">Permite Comodato
+                                    </th>
+                                    <th width="30">Ações</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngIf="items !== undefined && !items.length">
+                                    <td colspan="4" class="centered">Nenhum resultado.</td>
+                                </tr>
+                                <tr *ngFor="let item of items | paginate: {
+                        itemsPerPage: params.page_size,
+                        currentPage: params.page,
+                        totalItems: total
+                        }">
+                                    <td>{{ item.created | date: 'short' }}</td>
+                                    <td>{{ item.name }}</td>
+                                    <td>{{ item.price | currencyFormat }}</td>
+                                    <td [innerHTML]="item.is_active | booleanImg"></td>
+                                    <td [innerHTML]="item.has_consignment | booleanImg"></td>
+                                    <td>
+                                        <a href [routerLink]="['/estoque/editar-produto', item.id]"
+                                           class="btn btn-link"><i class="fa fa-edit"></i> editar</a>
+                                        <a href class="btn btn-link"><i class="fa fa-download"></i> entradas</a>
+                                        <a href class="btn btn-link"><i class="fa fa-upload"></i> saídas</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <custom-pagination-controls (pageChange)="pageChanged($event)"></custom-pagination-controls>
                     </div>
                 </div>
             </div>

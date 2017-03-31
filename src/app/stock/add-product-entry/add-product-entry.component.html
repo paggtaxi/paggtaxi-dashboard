@@ -1,0 +1,86 @@
+<div class="animated fadeIn">
+
+    <stock-menu></stock-menu>
+
+    <hr>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-plus"></i> Adicionar <strong>Entrada de Produto</strong>
+                </div>
+
+                <form [formGroup]="form" novalidate (ngSubmit)="submit(form.value, form.valid)">
+                    <div class="card-block">
+                        <list-errors [errors]="form.errors"></list-errors>
+
+                        <fieldset [disabled]="isLoading() || isLoadingItem('products')">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Produto</label>
+                                        <ng-select
+                                                [items]="productList"
+                                                [disabled]="isLoadingItem('products') || form.controls['product_id'].value"
+                                                [placeholder]="'Digite para pesquisar ...'"
+                                                (selected)="selectedProductSelect($event)"
+                                        ></ng-select>
+                                        <list-errors [errors]="form.controls['product_id'].errors"></list-errors>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6" *ngIf="form.controls['product_id'].value">
+                                    <button class="btn btn-link float-right" type="button"
+                                            (click)="cancelAndChangeProduct()"><i
+                                            class="fa fa-close"></i>
+                                        Alterar produto
+                                    </button>
+                                </div>
+                            </div>
+                            <div *ngIf="form.controls['product_id'].value">
+                                <div class="row" *ngFor="let item of createRange(countInputs)">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="item_id_{{item}}">{{item}} - Código de identificação</label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
+                                                <input type="text" class="form-control" id="item_id_{{item}}"
+                                                       formControlName="item_id_{{item}}"
+                                                       [attr.data-itemid]="item"
+                                                       (focus)="addInput($event)"
+                                                       placeholder="Insira o código único do produto">
+                                            </div>
+                                            <list-errors
+                                                    [errors]="form.controls['item_id_'+ item].errors"></list-errors>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <span class="text-warning" *ngIf="countInputs >= INPUT_LIMIT">Limite de {{INPUT_LIMIT}} campos por vez.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="card-footer">
+                        <button type="button"
+                                (click)="submit(form.value, form.valid, false)"
+                                [disabled]="isLoading()"
+                                class="btn btn-sm btn-primary btn-ladda"
+                                name="submit"
+                                [ladda]='isLoading()'>
+                            <i class="fa fa-floppy-o"></i> Salvar
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+        <!--/.col-->
+    </div>
+
+    <!--/.row-->
+</div>

@@ -1,0 +1,41 @@
+<div class="row">
+
+    <pagination-template #p="paginationApi"
+                         [id]="id"
+                         [maxSize]="maxSize"
+                         (pageChange)="pageChange.emit($event)">
+
+        <ul class="pagination centered"
+            role="navigation"
+            [attr.aria-label]="screenReaderPaginationLabel"
+            *ngIf="!(autoHide && p.pages.length <= 1)">
+            <li class="page-item" [class.disabled]="p.isFirstPage()" *ngIf="directionLinks">
+                <a href="javascript:void(0)" class="page-link" *ngIf="1 < p.getCurrent()" (click)="p.previous()"
+                   [attr.aria-label]="'Anterior'">
+                    Anterior
+                </a>
+                <span class="page-link" *ngIf="p.isFirstPage()">
+                Anterior
+            </span>
+            </li>
+            <li class="page-item" [class.active]="p.getCurrent() === page.value" *ngFor="let page of p.pages">
+                <a href="javascript:void(0)" class="page-link" (click)="p.setCurrent(page.value)"
+                   *ngIf="p.getCurrent() !== page.value">
+                    <span>{{ page.label }}</span>
+                </a>
+                <div class="page-link" *ngIf="p.getCurrent() === page.value">
+                    <span>{{ page.label }}</span>
+                </div>
+            </li>
+            <li class="page-item" [class.disabled]="p.isLastPage()" *ngIf="directionLinks">
+                <a href="javascript:void(0)" class="page-link" *ngIf="!p.isLastPage()" (click)="p.next()"
+                   [attr.aria-label]="'Próximo'">
+                    Próximo
+                </a>
+                <span class="page-link" *ngIf="p.isLastPage()">
+                 Próximo
+            </span>
+            </li>
+        </ul>
+    </pagination-template>
+</div>
