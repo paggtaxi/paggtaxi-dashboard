@@ -11,78 +11,80 @@
                     <i class="fa fa-plus"></i> Adicionar <strong>Produto</strong>
                 </div>
 
-                <form [formGroup]="form" novalidate (ngSubmit)="submit(form.value, form.valid)">
-                    <div class="card-block">
-                        <fieldset [disabled]="isLoading() || isLoadingItem('categories')">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="name">Nome</label>
-                                        <input type="text" class="form-control" id="name"
-                                               formControlName="name"
-                                               placeholder="Insira o nome do produto">
-                                        <list-errors [errors]="form.controls['name'].errors"></list-errors>
+                <div *ngIf="!hasError('loadProduct')">
+                    <form [formGroup]="form" novalidate (ngSubmit)="submit(form.value, form.valid)">
+                        <div class="card-block">
+                            <fieldset [disabled]="isLoading() || isLoadingItem('categories')">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="name">Nome</label>
+                                            <input type="text" class="form-control" id="name"
+                                                   formControlName="name"
+                                                   placeholder="Insira o nome do produto">
+                                            <list-errors [errors]="form.controls['name'].errors"></list-errors>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="category">Categoria</label>
+                                            <select class="form-control" id="category"
+                                                    formControlName="category">
+                                                <option value="{{item.id}}" *ngFor="let item of categoryList">
+                                                    {{item.name}}
+                                                </option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="category">Categoria</label>
-                                        <select class="form-control" id="category"
-                                                formControlName="category">
-                                            <option value="{{item.id}}" *ngFor="let item of categoryList">
-                                                {{item.name}}
-                                            </option>
-                                        </select>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="price">Valor</label>
+                                            <input currencyMask
+                                                   id="price"
+                                                   placeholder="Preço do produto para vendas"
+                                                   formControlName="price"
+                                                   class="form-control"
+                                                   [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"/>
+                                            <list-errors [errors]="form.controls['price'].errors"></list-errors>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="price">Valor</label>
-                                        <input currencyMask
-                                               id="price"
-                                               placeholder="Preço do produto para vendas"
-                                               formControlName="price"
-                                               class="form-control"
-                                               [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"/>
-                                        <list-errors [errors]="form.controls['price'].errors"></list-errors>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
+                                    <div class="col-sm-6">
 
-                                    <label for="allow-consignment">Permite comodato?</label>
-                                    <div class="clearfix"></div>
-                                    <label id="allow-consignment" class="switch switch-text switch-pill switch-primary">
-                                        <input type="checkbox" class="switch-input"
-                                               formControlName="has_consignment">
-                                        <span class="switch-label" data-on="sim" data-off="não"></span>
-                                        <span class="switch-handle"></span>
-                                    </label>
+                                        <label for="allow-consignment">Permite comodato?</label>
+                                        <div class="clearfix"></div>
+                                        <label id="allow-consignment"
+                                               class="switch switch-text switch-pill switch-primary">
+                                            <input type="checkbox" class="switch-input"
+                                                   formControlName="has_consignment">
+                                            <span class="switch-label" data-on="sim" data-off="não"></span>
+                                            <span class="switch-handle"></span>
+                                        </label>
+                                    </div>
                                 </div>
-                            </div>
-                        </fieldset>
-                    </div>
-                    <div class="card-footer">
-                        <button type="button"
-                                (click)="submit(form.value, form.valid, false)"
-                                [disabled]="isLoading()"
-                                class="btn btn-sm btn-primary btn-ladda"
-                                name="submit"
-                                [ladda]='isLoading()'>
-                            <i class="fa fa-floppy-o"></i> Salvar
-                        </button>
-                        <button *ngIf="productId"
-                                type="button"
-                                [disabled]="isLoading()"
-                                class="btn btn-sm btn-primary btn-ladda"
-                                (click)="submit(form.value, form.valid, true)"
-                                [ladda]='isLoading()'>
-                            <i class="fa fa-flag"></i> Salvar e continuar editando
-                        </button>
-                    </div>
-                </form>
-
+                            </fieldset>
+                        </div>
+                        <div class="card-footer">
+                            <button type="button"
+                                    (click)="submit(form.value, form.valid, false)"
+                                    [disabled]="isLoading()"
+                                    class="btn btn-sm btn-primary btn-ladda"
+                                    name="submit"
+                                    [ladda]='isLoading()'>
+                                <i class="fa fa-floppy-o"></i> Salvar
+                            </button>
+                            <button *ngIf="productId"
+                                    type="button"
+                                    [disabled]="isLoading()"
+                                    class="btn btn-sm btn-primary btn-ladda"
+                                    (click)="submit(form.value, form.valid, true)"
+                                    [ladda]='isLoading()'>
+                                <i class="fa fa-flag"></i> Salvar e continuar editando
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
         <!--/.col-->

@@ -1,4 +1,5 @@
 import { OnInit } from "@angular/core";
+import { BaseView } from "./base-view";
 abstract class AbstractLoadingView {
 
   abstract setLoading(loading: boolean);
@@ -10,7 +11,7 @@ abstract class AbstractLoadingView {
   abstract isLoadingItem(loadingId: string): boolean;
 }
 
-export class LoadingView implements AbstractLoadingView, OnInit {
+export class LoadingView extends BaseView implements AbstractLoadingView, OnInit {
   private loading = false;
   private loadingItems = {};
 

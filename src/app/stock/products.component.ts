@@ -14,6 +14,7 @@ export class StockProductsComponent extends BaseListView {
 
   constructor(private productsService: ProductsService) {
     super();
+    this.disableDateFilter();
   }
 
   request(): Observable<IServerResponseList> {

@@ -32,20 +32,15 @@
                                     <th data-column="name" width="30">Produto</th>
                                     <th data-column="price" width="10">Valor</th>
                                     <th data-column="is_active" width="10">Ativo</th>
-                                    <th data-column="has_consignment" width="10">Permite Comodato
-                                    </th>
+                                    <th data-column="has_consignment" width="10">Permite Comodato</th>
                                     <th width="30">Ações</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr *ngIf="items !== undefined && !items.length">
-                                    <td colspan="4" class="centered">Nenhum resultado.</td>
+                                    <td colspan="6" class="centered">Nenhum resultado.</td>
                                 </tr>
-                                <tr *ngFor="let item of items | paginate: {
-                        itemsPerPage: params.page_size,
-                        currentPage: params.page,
-                        totalItems: total
-                        }">
+                                <tr *ngFor="let item of items | paginate: { itemsPerPage: params.page_size, currentPage: params.page, totalItems: total}">
                                     <td>{{ item.created | date: 'short' }}</td>
                                     <td>{{ item.name }}</td>
                                     <td>{{ item.price | currencyFormat }}</td>

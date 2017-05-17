@@ -47,6 +47,10 @@ export class AddProductsComponent extends LoadingView implements OnInit, OnDestr
           (response: Product) => {
             this.form.patchValue(response);
             this.setLoading(false);
+          },
+          (error) => {
+            this.setError(true, 'loadProduct');
+            console.error(error);
           }
         )
       }

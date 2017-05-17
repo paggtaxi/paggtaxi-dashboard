@@ -13,5 +13,6 @@ export interface APIGetParams {
     page: number;
     start_date?: null;
     end_date?: null;
-    search?: null
+    search?: null;
+    disable_date_filter?: boolean;
 }

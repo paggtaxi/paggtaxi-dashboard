@@ -9,10 +9,12 @@ export class BaseListView extends LoadingView implements OnInit {
 
   items: any[];
   total = 0;
+  private enableDateFilter = true;
 
   params: APIGetParams = {
     page_size: 10,
-    page: 1
+    page: 1,
+    disable_date_filter: false
   };
 
   constructor() {
@@ -21,6 +23,10 @@ export class BaseListView extends LoadingView implements OnInit {
 
   ngOnInit() {
     this.getListItems();
+  }
+
+  disableDateFilter(){
+    this.enableDateFilter = false;
   }
 
   sortColumn(params) {
@@ -40,6 +46,11 @@ export class BaseListView extends LoadingView implements OnInit {
 
   getListItems() {
     this.setLoading(true);
+    if(this.enableDateFilter == false){
+      delete this.params.end_date;
+      delete this.params.start_date;
+      this.params.disable_date_filter = true;
+    }
     this.request().subscribe(
       (response: IServerResponseList) => {
         this.items = <any[]> response.results;
