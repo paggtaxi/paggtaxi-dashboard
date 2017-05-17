@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, ViewEncapsulation } from "@angular/core";
-import { PaginationControlsComponent } from "ng2-pagination";
+import { PaginationControlsComponent } from "ngx-pagination";
 
 @Component({
   selector: 'custom-pagination-controls',

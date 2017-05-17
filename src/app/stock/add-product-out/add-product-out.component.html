@@ -29,13 +29,13 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Produto</label>
-                                        <select2
-                                                [data]="productList"
-                                                [value]="initValue"
-                                                [class.input-loading]="isLoadingItem('products')"
-                                                [disabled]="!productList.length || isLoadingItem('products')"
-                                                (valueChanged)="selectedProduct($event)"
-                                        ></select2>
+                                        <!--<select2-->
+                                                <!--[data]="productList"-->
+                                                <!--[value]="initValue"-->
+                                                <!--[class.input-loading]="isLoadingItem('products')"-->
+                                                <!--[disabled]="!productList.length || isLoadingItem('products')"-->
+                                                <!--(valueChanged)="selectedProduct($event)"-->
+                                        <!--&gt;</select2>-->
                                         <list-errors [errors]="form.controls['product_id'].errors"></list-errors>
                                     </div>
                                 </div>
@@ -44,12 +44,12 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Taxista</label>
-                                        <select2
-                                                [data]="driverList"
-                                                [class.input-loading]="isLoadingItem('drivers')"
-                                                [disabled]="!driverList.length || isLoadingItem('drivers')"
-                                                (valueChanged)="selectedDriver($event)"
-                                        ></select2>
+                                        <!--<select2-->
+                                                <!--[data]="driverList"-->
+                                                <!--[class.input-loading]="isLoadingItem('drivers')"-->
+                                                <!--[disabled]="!driverList.length || isLoadingItem('drivers')"-->
+                                                <!--(valueChanged)="selectedDriver($event)"-->
+                                        <!--&gt;</select2>-->
                                         <list-errors [errors]="form.controls['driver_id'].errors"></list-errors>
                                     </div>
                                 </div>

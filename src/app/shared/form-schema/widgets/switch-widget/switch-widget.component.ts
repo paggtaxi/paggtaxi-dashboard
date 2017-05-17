@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 
-import { ControlWidget } from 'angular2-schema-form/src/widget';
+import { ControlWidget } from 'angular2-schema-form';
 
 @Component({
   selector: 'app-switch-widget',

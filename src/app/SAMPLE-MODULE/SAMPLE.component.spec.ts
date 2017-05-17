@@ -2,22 +2,22 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
+import { SAMPLEComponent } from "./SAMPLE.component";
 
-import { StockComponent } from './stock.component';
 
 describe('SAMPLEComponent', () => {
-  let component: StockComponent;
-  let fixture: ComponentFixture<StockComponent>;
+  let component: SAMPLEComponent;
+  let fixture: ComponentFixture<SAMPLEComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StockComponent ]
+      declarations: [ SAMPLEComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(StockComponent);
+    fixture = TestBed.createComponent(SAMPLEComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

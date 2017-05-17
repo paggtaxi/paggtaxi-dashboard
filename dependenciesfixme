@@ -1,0 +1,22 @@
+angular-calendar
+angular2-jwt
+angular2-modal
+jquery
+jquery-mask-plugin
+
+ng2-currency-mask
+ng2-daterangepicker
+ng2-pagination
+ng2-select2
+ng2-smart-table
+ng2-spin-kit
+
+
+- DevDeps
+
+pace-progress
+primeng
+select2
+@types/jasmine
+@types/jquery
+angular2-schema-form

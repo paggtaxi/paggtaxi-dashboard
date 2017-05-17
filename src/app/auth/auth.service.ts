@@ -8,7 +8,7 @@ import { User } from "../shared/models/user.model";
 
 @Injectable()
 export class AuthService {
-  static TOKEN_NAME = 'id_token';
+  static TOKEN_NAME = 'token';
 
   constructor(private router: Router, private http: Http) {
   }

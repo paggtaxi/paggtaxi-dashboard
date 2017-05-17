@@ -5,7 +5,7 @@ import { StockProductsComponent } from "./products.component";
 import { ProductsService } from "./products.service";
 import { AddProductsComponent } from "./add-products/add-products.component";
 import { MenuComponent } from "./menu/menu.component";
-import { SchemaFormModule, WidgetRegistry } from "angular2-schema-form/src";
+import { SchemaFormModule, WidgetRegistry } from "angular2-schema-form";
 import { CustomWidgetRegistry } from "../shared/form-schema/custom-widgetregistry";
 import { WaveComponent } from "ng2-spin-kit";
 import { ListProductEntryComponent } from "./list-product-entry/list-product-entry.component";
@@ -17,8 +17,8 @@ import { SelectModule } from 'ng2-select';
 import { ModalModule } from "angular2-modal";
 import { BootstrapModalModule } from "angular2-modal/plugins/bootstrap";
 import { AddProductOutComponent } from './add-product-out/add-product-out.component';
-import { Select2Module } from 'ng2-select2';
-import { DatepickerModule } from "ng2-bootstrap";
+// import { Select2Module } from 'ng2-select2';
+import { DatepickerModule } from "ngx-bootstrap";
 
 @NgModule({
   imports: [
@@ -29,7 +29,7 @@ import { DatepickerModule } from "ng2-bootstrap";
     SelectModule,
     ModalModule.forRoot(),
     BootstrapModalModule,
-    Select2Module,
+    // Select2Module,
     DatepickerModule.forRoot()
   ],
   declarations: [

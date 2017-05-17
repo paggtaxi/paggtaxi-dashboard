@@ -1,4 +1,3 @@
-
 .navbar {
   .form-inline {
     margin-top: 1px;
@@ -23,18 +22,10 @@
         color: $navbar-color;
       }
     }
-    .form-control::-webkit-input-placeholder {
-      color: $navbar-color;
-    }
-    .form-control:-moz-placeholder {
-      color: $navbar-color;
-    }
-    .form-control::-moz-placeholder {
-      color: $navbar-color;
-    }
-    .form-control:-ms-input-placeholder {
-      color: $navbar-color;
-    }
+    .form-control::-webkit-input-placeholder { color: $navbar-color; }
+    .form-control:-moz-placeholder { color: $navbar-color; }
+    .form-control::-moz-placeholder { color: $navbar-color; }
+    .form-control:-ms-input-placeholder { color: $navbar-color; }
 
     .input-group-btn {
       height: 40px;
@@ -68,11 +59,11 @@ body:not(.top-nav) {
 
   .sidebar {
 
-    ul.nav {
+    .nav {
 
-      li.nav-item {
+      .nav-item {
 
-        a.nav-link {
+        .nav-link {
 
           i {
             width: 45px;
@@ -83,7 +74,7 @@ body:not(.top-nav) {
             margin-left: -$sidebar-nav-link-padding-x;
             line-height: 45px;
             color: $sidebar-nav-link-icon-color;
-            border-right: 1px solid $border-color;
+            border-right:  1px solid $border-color;
           }
         }
       }
@@ -452,4 +443,12 @@ select2 {
 
 p-calendar {
   display: block;
+}
+.open {
+  > .dropdown-menu {
+    display: block;
+  }
+  > a {
+    outline: 0;
+  }
 }

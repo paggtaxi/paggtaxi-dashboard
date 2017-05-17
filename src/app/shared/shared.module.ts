@@ -5,7 +5,7 @@ import { ListErrorsComponent } from "./components/list-errors/list-errors.compon
 import { CurrencyFormatComponent } from "./components/currency-format/currency-format.component";
 import { Daterangepicker } from "ng2-daterangepicker";
 import { CustomPaginationControlsComponent } from "./pagination/custom-pagination.component";
-import { Ng2PaginationModule } from "ng2-pagination";
+import { NgxPaginationModule } from "ngx-pagination";
 import { CurrencyMaskModule } from "ng2-currency-mask";
 import { LaddaModule } from "angular2-ladda";
 import { PipeModule } from "./pipe/pipe.module";
@@ -16,7 +16,7 @@ import { CalendarModule } from "primeng/primeng";
 @NgModule({
   imports: [
     CommonModule,
-    Ng2PaginationModule,
+    NgxPaginationModule,
     FormsModule,
     ReactiveFormsModule,
     Daterangepicker,
@@ -34,7 +34,7 @@ import { CalendarModule } from "primeng/primeng";
   ],
   exports: [
     CommonModule,
-    Ng2PaginationModule,
+    NgxPaginationModule,
     FormsModule,
     ReactiveFormsModule,
     Daterangepicker,

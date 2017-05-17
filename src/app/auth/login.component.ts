@@ -23,17 +23,18 @@ export class LoginComponent {
     if (form.valid) {
       this.isLoading = true;
       this.auth.login(this.form.username, this.form.password)
-        .then((response) => {
+        .then(() => {
             this.errorMessage = null;
             this.isLoading = false;
-            this.router.navigate(['/dashboard']);
+            this.router.navigate(['/dashboard']).then((e) => console.log(e)).catch((e) => console.log(e));
           }
         )
         .catch((error) => {
+          console.error(error);
           if (error.status === 400) {
             this.errorMessage = 'Suas credenciais estão incorretas. Tente novamente ou redefina sua senha.';
           } else {
-            this.errorMessage = `Ocorreu um erro inesperado, tente novamente mais tarde. [Cod.: ${error.status}]`;
+            this.errorMessage = `Ocorreu um erro inesperado, tente novamente mais tarde. [Cod.: ${error.status || 0}]`;
           }
           this.isLoading = false;
         })

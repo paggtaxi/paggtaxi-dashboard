@@ -1,25 +1,33 @@
 import { Injectable } from "@angular/core";
-import { Router, CanActivate } from "@angular/router";
+import { Router, CanActivate, CanActivateChild, ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
 // Import our authentication service
 import { AuthService } from "./auth.service";
+import { Logger } from "@nsalaun/ng-logger";
 
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class AuthGuard implements CanActivate, CanActivateChild {
 
-  constructor(private auth: AuthService, private router: Router) {
+  constructor(private auth: AuthService, private router: Router, private logger: Logger) {
   }
 
-  canActivate() {
-    // If user is not logged in we'll send them to the homepage 
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    this.logger.debug("canActivate");
     if (this.auth.loggedIn()) {
+      this.logger.debug("User is already logged...");
       if (this.auth.mustUpdateToken()) {
+        this.logger.debug("mustUpdateToken", this.auth.mustUpdateToken());
         this.auth.updateCredentials();
       }
       return true;
     } else {
+      this.logger.debug("User not is logged...");
       this.router.navigate(['/auth/login']);
       return false;
     }
+  }
+
+  canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    return this.canActivate(route, state);
   }
 
 }
