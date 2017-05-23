@@ -12,7 +12,6 @@ import { AuthService } from "../../auth/auth.service";
 import { Modal } from "angular2-modal/plugins/bootstrap";
 import { Overlay } from "angular2-modal";
 import { TaxiDriver } from "../../shared/models/taxi-driver.model";
-import setPrototypeOf = Reflect.setPrototypeOf;
 import { CooperativeService } from "../../cooperative/cooperative.service";
 import { AppSettings } from "../../app-settings";
 
@@ -29,7 +28,6 @@ export class AddProductOutComponent extends LoadingView implements OnInit {
   form: FormGroup;
   productList: Array<INgSelectData> = [];
   driverList: Array<INgSelectData> = [];
-  initValue: any;
 
   datePickerLocale: any;
   datePickerFormat: string;
@@ -67,8 +65,7 @@ export class AddProductOutComponent extends LoadingView implements OnInit {
     this.productList = products.map((value: Product) => {
       return {id: value.id, text: value.name}
     });
-    if (this.productList.length) {
-      this.initValue = this.productList[0];
+    if (!Utils.isObjEmpty(this.productList)) {
       this.selectedProduct({value: this.productList[0].id});
     }
   }
@@ -102,6 +99,7 @@ export class AddProductOutComponent extends LoadingView implements OnInit {
   }
 
   selectedProduct(value: ISelect2SelectedData) {
+    // this.initValue = value.value;
     this.form.controls['product_id'].setValue(value.value);
   }
 
@@ -110,26 +108,26 @@ export class AddProductOutComponent extends LoadingView implements OnInit {
   }
 
   getProductSelectItems(item_id) {
-    this.setLoadingItem('products', true);
+    this.setLoading('products', true);
     this.productsService.getProducts({item_id: item_id}).subscribe(
       (response: IServerResponseList) => {
         this.setProductList(<Product[]>response.results);
-        this.setLoadingItem('products', false);
+        this.setLoading('products', false);
       },
-      () => this.setLoadingItem('products', false),
-      () => this.setLoadingItem('products', false)
+      () => this.setLoading('products', false),
+      () => this.setLoading('products', false)
     );
   }
 
   getDriversSelectItems() {
-    this.setLoadingItem('drivers', true);
+    this.setLoading('drivers', true);
     this.coopService.getDrivers(AppSettings.LARGE_PAGE_RESULTS).subscribe(
       (response: IServerResponseList) => {
         this.setDriverList(<TaxiDriver[]>response.results);
-        this.setLoadingItem('drivers', false);
+        this.setLoading('drivers', false);
       },
-      () => this.setLoadingItem('drivers', false),
-      () => this.setLoadingItem('drivers', false)
+      () => this.setLoading('drivers', false),
+      () => this.setLoading('drivers', false)
     );
   }
 
@@ -138,11 +136,11 @@ export class AddProductOutComponent extends LoadingView implements OnInit {
       .subscribe(
         (newValue) => {
           if (newValue) {
-            this.setLoadingItem('products', true);
+            this.setLoading('products', true);
             this.productList = [];
             this.form.controls['product_id'].setValue('');
           } else {
-            this.setLoadingItem('products', false);
+            this.setLoading('products', false);
           }
         }
       );

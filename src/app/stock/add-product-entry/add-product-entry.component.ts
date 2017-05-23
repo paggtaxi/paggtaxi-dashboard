@@ -20,8 +20,9 @@ import { Overlay } from 'angular2-modal';
 export class AddProductEntryComponent extends LoadingView implements OnInit {
 
   form: FormGroup;
+  submitted = false;
   productList: Array<INgSelectData> = [];
-  countInputs = 1;
+  countInputs = 0;
   INPUT_LIMIT = 30;
 
   constructor(private fb: FormBuilder,
@@ -34,14 +35,18 @@ export class AddProductEntryComponent extends LoadingView implements OnInit {
               private toasterService: ToasterService) {
     super();
     overlay.defaultViewContainer = vcRef;
+    this.setForm();
+  }
+
+  setForm() {
     this.form = this.fb.group({
-      product_id: null,
-      item_id_1: null
-    })
+      product_id: new FormControl('', [Validators.required])
+    });
   }
 
   ngOnInit() {
     this.getProductSelectItems();
+    this.addInput();
   }
 
   setProductList(products: Product[]) {
@@ -50,19 +55,23 @@ export class AddProductEntryComponent extends LoadingView implements OnInit {
     });
   }
 
-  submit(data: any) {
+  submit(data: any, valid: boolean) {
+    this.submitted = true;
+    if (!valid) {
+      return;
+    }
     this.setLoading(true);
     let request: Observable<Product>;
-    let item_id = [];
+    let items = [];
     for (let item of Object.keys(data)) {
       if (item.indexOf('item_id') !== -1) {
-        item_id.push(data[item]);
+        items.push({item_id: data[item], amount: data['amount_' + item.split('_').pop()]});
       }
     }
-    console.log(item_id);
+    console.log(items);
     request = this.productsService.createEntry({
       product: data.product_id,
-      item_id: item_id
+      items: items
     });
     request.subscribe(
       () => {
@@ -82,14 +91,14 @@ export class AddProductEntryComponent extends LoadingView implements OnInit {
   }
 
   getProductSelectItems() {
-    this.setLoadingItem('products', true);
+    this.setLoading('products', true);
     this.productsService.getProducts(AppSettings.LARGE_PAGE_RESULTS).subscribe(
       (response: IServerResponseList) => {
         this.setProductList(<Product[]>response.results);
-        this.setLoadingItem('products', false);
+        this.setLoading('products', false);
       },
-      () => this.setLoadingItem('products', false),
-      () => this.setLoadingItem('products', false)
+      () => this.setLoading('products', false),
+      () => this.setLoading('products', false)
     );
   }
 
@@ -112,17 +121,26 @@ export class AddProductEntryComponent extends LoadingView implements OnInit {
       }) // catch error not related to the result (modal open...)
       .then((dialog: any) => dialog.result) // dialog has more properties,lets just return the promise for a result.
       .then(() => {
-        this.form.controls['product_id'].setValue(null);
-        this.countInputs = 1;
+        this.clearForm();
       })
       .catch(() => {
       }) // if were here it was cancelled (click or non block click) // if were here ok was clicked.
   }
 
-  addInput($event) {
+  clearForm() {
+    this.countInputs = 1;
+    this.setForm();
+  }
+
+  addInputEvent($event) {
     if ($($event.target).data('itemid') === this.countInputs && this.countInputs < this.INPUT_LIMIT) {
-      this.countInputs++;
-      this.form.addControl(`item_id_${this.countInputs}`, new FormControl('', null));
+      this.addInput();
     }
+  }
+
+  addInput() {
+    this.countInputs++;
+    this.form.addControl(`item_id_${this.countInputs}`, new FormControl(''));
+    this.form.addControl(`amount_${this.countInputs}`, new FormControl(1, [Validators.pattern(`[0-9]*`)]));
   }
 }

@@ -36,35 +36,10 @@ export class AddProductsComponent extends LoadingView implements OnInit, OnDestr
   }
 
   ngOnInit() {
-    this.setLoading(true);
-
     this.routeSub = this.currentRoute.params.subscribe(params => {
-      this.productId = params['id'];
-      if (!this.productId) {
-        this.setLoading(false);
-      } else {
-        this.productsService.getProduct(this.productId).subscribe(
-          (response: Product) => {
-            this.form.patchValue(response);
-            this.setLoading(false);
-          },
-          (error) => {
-            this.setError(true, 'loadProduct');
-            console.error(error);
-          }
-        )
-      }
+      this.loadProductToEdit(params['id']);
     });
-
-    this.setLoadingItem('categories', true);
-    this.productsService.getCategories().subscribe(
-      (response: Array<IServerResponseIdName>) => {
-        this.categoryList = response;
-        this.setLoadingItem('categories', false);
-      },
-      () => this.setLoadingItem('categories', false),
-      () => this.setLoadingItem('categories', false)
-    );
+    this.setupCategorySelect();
   }
 
   ngOnDestroy(): void {
@@ -99,6 +74,38 @@ export class AddProductsComponent extends LoadingView implements OnInit, OnDestr
       },
       () => this.setLoading(false)
     )
+  }
+
+  loadProductToEdit(productId: number) {
+    if (productId) {
+      this.productId = productId;
+      this.setLoading('productToEdit', true);
+      this.productsService.getProduct(this.productId).subscribe(
+        (response: Product) => {
+          this.form.patchValue(response);
+          this.setLoading('productToEdit', false);
+        },
+        (error) => {
+          this.setError(true, 'productToEdit');
+          console.error(error);
+          this.setLoading('productToEdit', false);
+        }
+      )
+    }
+  }
+
+  setupCategorySelect() {
+
+    this.setLoading('categories', true);
+    this.productsService.getCategories().subscribe(
+      (response: Array<IServerResponseIdName>) => {
+        this.categoryList = response;
+        this.setLoading('categories', false);
+      },
+      () => this.setLoading('categories', false),
+      () => this.setLoading('categories', false)
+    );
+
   }
 
 }

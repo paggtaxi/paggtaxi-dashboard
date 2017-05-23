@@ -80,12 +80,12 @@ export class ProductsService extends BaseHttpService {
       .catch(this.handlerError);
   }
 
-  createEntry(data: { product: number; item_id: string | string[] }): Observable<Product> {
+  createEntry(data: { product: number; items: { item_id: string, amount: number | string }[] }): Observable<Product> {
     return this.authHttp.post(
       this.makeUrl('products-entries'),
       {
         product_id: data.product,
-        item_id: data.item_id,
+        items: data.items,
       }
     )
       .map((response: Response) => response.json())

@@ -4,6 +4,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { FullLayoutComponent } from "./layouts/full-layout.component";
 import { AuthGuard } from "./auth/auth-guard.service";
 import { SimpleLayoutComponent } from "./layouts/simple-layout.component";
+import { p404Component } from "./shared/components/error-pages/404.component";
 
 export const routes: Routes = [
   {
@@ -31,15 +32,19 @@ export const routes: Routes = [
     ]
   },
   {
-    path: 'auth',
+    path: '',
     component: SimpleLayoutComponent,
     data: {
       title: 'Usuário'
     },
     children: [
       {
-        path: '',
+        path: 'auth',
         loadChildren: './auth/auth.module#AuthModule',
+      },
+      {
+        path: '404',
+        component: p404Component
       }
     ]
   }

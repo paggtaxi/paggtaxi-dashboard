@@ -10,9 +10,11 @@ import { CurrencyMaskModule } from "ng2-currency-mask";
 import { LaddaModule } from "angular2-ladda";
 import { PipeModule } from "./pipe/pipe.module";
 import { CardHeaderControlsComponent } from './components/card-header-controls/card-header-controls.component';
-import { DatepickerComponent } from './components/datepicker/datepicker.component';
-import { CalendarModule } from "primeng/primeng";
+// import { DatepickerComponent } from './components/datepicker/datepicker.component';
+import { ErrorCardBlockComponent } from "./components/error-card-block.component";
+import { CalendarModule } from "primeng/components/calendar/calendar";
 
+import {TranslateModule} from '@ngx-translate/core';
 @NgModule({
   imports: [
     CommonModule,
@@ -30,6 +32,7 @@ import { CalendarModule } from "primeng/primeng";
     CurrencyFormatComponent,
     CustomPaginationControlsComponent,
     CardHeaderControlsComponent,
+    ErrorCardBlockComponent
     // DatepickerComponent
   ],
   exports: [
@@ -46,6 +49,8 @@ import { CalendarModule } from "primeng/primeng";
     CurrencyFormatComponent,
     CustomPaginationControlsComponent,
     CardHeaderControlsComponent,
+    ErrorCardBlockComponent,
+    TranslateModule
     // DatepickerComponent
   ]
 })

@@ -17,7 +17,7 @@ import { SelectModule } from 'ng2-select';
 import { ModalModule } from "angular2-modal";
 import { BootstrapModalModule } from "angular2-modal/plugins/bootstrap";
 import { AddProductOutComponent } from './add-product-out/add-product-out.component';
-// import { Select2Module } from 'ng2-select2';
+import { Select2Module } from 'ng2-select2';
 import { DatepickerModule } from "ngx-bootstrap";
 
 @NgModule({
@@ -29,7 +29,7 @@ import { DatepickerModule } from "ngx-bootstrap";
     SelectModule,
     ModalModule.forRoot(),
     BootstrapModalModule,
-    // Select2Module,
+    Select2Module,
     DatepickerModule.forRoot()
   ],
   declarations: [

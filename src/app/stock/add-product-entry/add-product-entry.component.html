@@ -15,26 +15,28 @@
                     <div class="card-block">
                         <list-errors [errors]="form.errors"></list-errors>
 
-                        <fieldset [disabled]="isLoading() || isLoadingItem('products')">
+                        <fieldset [disabled]="isLoading() || isLoading('products')">
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Produto</label>
                                         <ng-select
                                                 [items]="productList"
-                                                [disabled]="isLoadingItem('products') || form.controls['product_id'].value"
+                                                [disabled]="isLoading('products') || form.controls['product_id'].value"
                                                 [placeholder]="'Digite para pesquisar ...'"
                                                 (selected)="selectedProductSelect($event)"
                                         ></ng-select>
-                                        <list-errors [errors]="form.controls['product_id'].errors"></list-errors>
+                                        <list-errors
+                                                *ngIf="submitted"
+                                                [errors]="form.controls['product_id'].errors"></list-errors>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-6" *ngIf="form.controls['product_id'].value">
                                     <button class="btn btn-link float-right" type="button"
-                                            (click)="cancelAndChangeProduct()"><i
-                                            class="fa fa-close"></i>
+                                            (click)="cancelAndChangeProduct()">
+                                        <i class="fa fa-close"></i>
                                         Alterar produto
                                     </button>
                                 </div>
@@ -49,13 +51,29 @@
                                                 <input type="text" class="form-control" id="item_id_{{item}}"
                                                        formControlName="item_id_{{item}}"
                                                        [attr.data-itemid]="item"
-                                                       (focus)="addInput($event)"
+                                                       (focus)="addInputEvent($event)"
                                                        placeholder="Insira o código único do produto">
                                             </div>
                                             <list-errors
+                                                    *ngIf="submitted"
                                                     [errors]="form.controls['item_id_'+ item].errors"></list-errors>
                                         </div>
                                     </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="amount_{{item}}">{{item}} - Quantidade</label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="fa fa-cubes"></i></span>
+                                                <input type="text" class="form-control" id="amount_{{item}}"
+                                                       formControlName="amount_{{item}}"
+                                                       placeholder="Insira o código único do produto">
+                                            </div>
+                                            <list-errors
+                                                    *ngIf="submitted"
+                                                    [errors]="form.controls['amount_'+ item].errors"></list-errors>
+                                        </div>
+                                    </div>
+                                    <hr>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6">
@@ -66,9 +84,8 @@
                         </fieldset>
                     </div>
                     <div class="card-footer">
-                        <button type="button"
-                                (click)="submit(form.value, form.valid, false)"
-                                [disabled]="isLoading()"
+                        <button type="submit"
+                                [disabled]="isLoading() || !form.valid"
                                 class="btn btn-sm btn-primary btn-ladda"
                                 name="submit"
                                 [ladda]='isLoading()'>

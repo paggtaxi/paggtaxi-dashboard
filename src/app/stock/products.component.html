@@ -28,12 +28,13 @@
                             <table class="table table-bordered table-striped table-condensed">
                                 <thead>
                                 <tr tableOrdering (sortColumn)="sortColumn($event)">
-                                    <th data-column="created" width="30">Criado em</th>
-                                    <th data-column="name" width="30">Produto</th>
+                                    <th data-column="created" width="20">Criado em</th>
+                                    <th data-column="name" width="20">Produto</th>
                                     <th data-column="price" width="10">Valor</th>
+                                    <th width="10">Estoque</th>
                                     <th data-column="is_active" width="10">Ativo</th>
                                     <th data-column="has_consignment" width="10">Permite Comodato</th>
-                                    <th width="30">Ações</th>
+                                    <th width="20">Ações</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -44,6 +45,7 @@
                                     <td>{{ item.created | date: 'short' }}</td>
                                     <td>{{ item.name }}</td>
                                     <td>{{ item.price | currencyFormat }}</td>
+                                    <td>{{ item.amount }}</td>
                                     <td [innerHTML]="item.is_active | booleanImg"></td>
                                     <td [innerHTML]="item.has_consignment | booleanImg"></td>
                                     <td>

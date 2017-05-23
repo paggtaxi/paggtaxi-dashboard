@@ -11,10 +11,15 @@
                     <i class="fa fa-plus"></i> Adicionar <strong>Produto</strong>
                 </div>
 
-                <div *ngIf="!hasError('loadProduct')">
+                <error-card-block *ngIf="hasError('productToEdit')"></error-card-block>
+
+                <div *ngIf="!hasError('productToEdit') && !isLoading('productToEdit')">
                     <form [formGroup]="form" novalidate (ngSubmit)="submit(form.value, form.valid)">
                         <div class="card-block">
-                            <fieldset [disabled]="isLoading() || isLoadingItem('categories')">
+
+                            <list-errors [errors]="form.errors"></list-errors>
+
+                            <fieldset [disabled]="isLoading() || isLoading('categories')">
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="form-group">

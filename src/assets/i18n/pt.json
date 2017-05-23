@@ -1,0 +1,7 @@
+{
+  "FORMS_ERRORS": {
+    "INVALID": "Por favor, insira um valor válido.",
+    "REQUIRED": "Este campo é obrigatório."
+
+  }
+}

@@ -14,7 +14,7 @@
                 <form [formGroup]="form" novalidate (ngSubmit)="submit(form.value, form.valid)">
                     <div class="card-block">
                         <list-errors [errors]="form.errors"></list-errors>
-                        <fieldset [disabled]="isLoading() || isLoadingItem('drivers')">
+                        <fieldset [disabled]="isLoading() || isLoading('drivers')">
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
@@ -29,13 +29,12 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Produto</label>
-                                        <!--<select2-->
-                                                <!--[data]="productList"-->
-                                                <!--[value]="initValue"-->
-                                                <!--[class.input-loading]="isLoadingItem('products')"-->
-                                                <!--[disabled]="!productList.length || isLoadingItem('products')"-->
-                                                <!--(valueChanged)="selectedProduct($event)"-->
-                                        <!--&gt;</select2>-->
+                                        <select2
+                                                [data]="productList"
+                                                [class.input-loading]="isLoading('products')"
+                                                [disabled]="!productList.length || isLoading('products')"
+                                                (valueChanged)="selectedProduct($event)"
+                                        ></select2>
                                         <list-errors [errors]="form.controls['product_id'].errors"></list-errors>
                                     </div>
                                 </div>
@@ -44,12 +43,12 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Taxista</label>
-                                        <!--<select2-->
-                                                <!--[data]="driverList"-->
-                                                <!--[class.input-loading]="isLoadingItem('drivers')"-->
-                                                <!--[disabled]="!driverList.length || isLoadingItem('drivers')"-->
-                                                <!--(valueChanged)="selectedDriver($event)"-->
-                                        <!--&gt;</select2>-->
+                                        <select2
+                                                [data]="driverList"
+                                                [class.input-loading]="isLoading('drivers')"
+                                                [disabled]="!driverList.length || isLoading('drivers')"
+                                                (valueChanged)="selectedDriver($event)"
+                                        ></select2>
                                         <list-errors [errors]="form.controls['driver_id'].errors"></list-errors>
                                     </div>
                                 </div>
@@ -60,8 +59,9 @@
                                     <div class="form-group">
                                         <label>Data de saída</label>
                                         <p-calendar [(ngModel)]="dt"
-                                                    dateFormat="{{datePickerFormat}}"
-                                                    inputStyleClass="form-control"
+                                                    [dateFormat]="datePickerFormat"
+                                                    [monthNavigator]="true"
+                                                    [inputStyleClass]="'form-control'"
                                                     [maxDate]="maxDt"
                                                     [locale]="datePickerLocale"
                                                     [ngModelOptions]="{standalone: true}"></p-calendar>

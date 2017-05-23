@@ -16,7 +16,7 @@ import { FullLayoutComponent } from "./layouts/full-layout.component";
 import { SimpleLayoutComponent } from "./layouts/simple-layout.component";
 import { AuthGuard } from "./auth/auth-guard.service";
 import { AuthService } from "./auth/auth.service";
-import { HttpModule } from "@angular/http";
+import { Http, HttpModule } from "@angular/http";
 import { AuthModule } from "./auth/auth.module";
 import { Ng2SmartTableModule } from "ng2-smart-table";
 import { NgxPaginationModule } from "ngx-pagination";
@@ -28,8 +28,14 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { ToasterModule } from "angular2-toaster";
 import { CooperativeModule } from "./cooperative/cooperative.module";
 import { AppLocale } from "./shared/locale";
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { NgLoggerModule, Level } from '@nsalaun/ng-logger';
+import { AuthenticatedHttpService } from "app/shared/http-interceptor";
+import { p404Component } from "./shared/components/error-pages/404.component";
+import { p500Component } from "app/shared/components/error-pages/500.component";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 const LOG_LEVEL = Level.DEBUG;
 
@@ -37,9 +43,21 @@ if (!isDevMode()) {
   const LOG_LEVEL = Level.ERROR;
 }
 
+export function HttpLoaderFactory(http: Http) {
+  return new TranslateHttpLoader(http);
+}
+
 @NgModule({
   imports: [
     BrowserModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [Http]
+      }
+    }),
+    BrowserAnimationsModule,
     AppRoutingModule,
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
@@ -60,6 +78,8 @@ if (!isDevMode()) {
     AppComponent,
     FullLayoutComponent,
     SimpleLayoutComponent,
+    p404Component,
+    p500Component,
     NAV_DROPDOWN_DIRECTIVES,
     BreadcrumbsComponent,
     SIDEBAR_TOGGLE_DIRECTIVES,
@@ -77,7 +97,11 @@ if (!isDevMode()) {
     {provide: WidgetRegistry, useClass: CustomWidgetRegistry},
     AuthGuard,
     AuthService,
-    AppLocale
+    AppLocale,
+    {
+      provide: Http,
+      useClass: AuthenticatedHttpService
+    }
   ],
   bootstrap: [AppComponent]
 })
