@@ -109,9 +109,9 @@ export class AddProductOutComponent extends LoadingView implements OnInit {
 
   getProductSelectItems(item_id) {
     this.setLoading('products', true);
-    this.productsService.getProducts({item_id: item_id}).subscribe(
-      (response: IServerResponseList) => {
-        this.setProductList(<Product[]>response.results);
+    this.productsService.getProducts({item_id: item_id, is_active: true}).subscribe(
+      (response) => {
+        this.setProductList(response.results);
         this.setLoading('products', false);
       },
       () => this.setLoading('products', false),
@@ -122,8 +122,8 @@ export class AddProductOutComponent extends LoadingView implements OnInit {
   getDriversSelectItems() {
     this.setLoading('drivers', true);
     this.coopService.getDrivers(AppSettings.LARGE_PAGE_RESULTS).subscribe(
-      (response: IServerResponseList) => {
-        this.setDriverList(<TaxiDriver[]>response.results);
+      (response) => {
+        this.setDriverList(response.results);
         this.setLoading('drivers', false);
       },
       () => this.setLoading('drivers', false),

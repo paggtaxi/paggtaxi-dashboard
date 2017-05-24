@@ -1,8 +1,8 @@
-export interface IServerResponseList {
+export class IServerResponseList<T> {
   count: number;
   next: string;
   previous: string;
-  results: Array<Object>;
+  results: Array<T>;
 }
 
 export interface IServerResponseIdName {

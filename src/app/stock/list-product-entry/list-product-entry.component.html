@@ -26,10 +26,11 @@
                         <table class="table table-bordered table-striped table-condensed">
                             <thead>
                             <tr tableOrdering (sortColumn)="sortColumn($event)">
-                                <th data-column="created" width="30">Criado em</th>
-                                <th data-column="product.name" width="30">Produto</th>
-                                <th data-column="item_id" width="20">Código de Identificação</th>
-                                <th data-column="who_created.user.email" width="10">Vendedor</th>
+                                <th data-column="created">Criado em</th>
+                                <th data-column="product.name">Produto</th>
+                                <th data-column="product_item.item_id">Código de Identificação</th>
+                                <th data-column="product.amount">Qtd.</th>
+                                <th data-column="who_created.user.email">Vendedor</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -42,9 +43,10 @@
                         totalItems: total
                         }">
                                 <td>{{ item.created | date: 'short' }}</td>
-                                <td>{{ item.product.name }}</td>
-                                <td>{{ item.item_id }}</td>
-                                <td>{{ item.who_created.user.email }}</td>
+                                <td>{{ item.product?.name }}</td>
+                                <td>{{ item.product_item?.item_id }}</td>
+                                <td>{{ item.product_item?.amount }}</td>
+                                <td>{{ item.who_created?.user?.email }}</td>
                             </tr>
                             </tbody>
                         </table>

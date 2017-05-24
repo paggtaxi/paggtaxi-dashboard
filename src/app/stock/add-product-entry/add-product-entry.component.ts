@@ -6,13 +6,13 @@ import { LoadingView } from "../../shared/base-loading-view";
 import { Utils } from "../../shared/utils";
 import { Router } from "@angular/router";
 import { ToasterService } from "angular2-toaster";
-import { INgSelectData, IServerResponseList } from "../../shared/interfaces/server-response";
+import { INgSelectData } from "../../shared/interfaces/server-response";
 import { Observable } from "rxjs";
-import setPrototypeOf = Reflect.setPrototypeOf;
 import { AppSettings } from "../../app-settings";
 import { AuthService } from "../../auth/auth.service";
-import { Modal } from 'angular2-modal/plugins/bootstrap';
-import { Overlay } from 'angular2-modal';
+import { Modal } from "angular2-modal/plugins/bootstrap";
+import { Overlay } from "angular2-modal";
+import setPrototypeOf = Reflect.setPrototypeOf;
 
 @Component({
   templateUrl: 'add-product-entry.component.html'
@@ -93,8 +93,8 @@ export class AddProductEntryComponent extends LoadingView implements OnInit {
   getProductSelectItems() {
     this.setLoading('products', true);
     this.productsService.getProducts(AppSettings.LARGE_PAGE_RESULTS).subscribe(
-      (response: IServerResponseList) => {
-        this.setProductList(<Product[]>response.results);
+      (response) => {
+        this.setProductList(response.results);
         this.setLoading('products', false);
       },
       () => this.setLoading('products', false),

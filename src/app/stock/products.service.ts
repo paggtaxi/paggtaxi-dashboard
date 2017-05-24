@@ -5,7 +5,7 @@ import { AppSettings } from "../app-settings";
 import { IServerResponseIdName, IServerResponseList } from "../shared/interfaces/server-response";
 import { BaseHttpService } from "../shared/http/base-http-service";
 import { Observable } from "rxjs";
-import { Product } from "./stock.models";
+import { Product, ProductEntry } from "./stock.models";
 import { Moment } from "moment";
 import { Utils } from "../shared/utils";
 
@@ -34,7 +34,7 @@ export class ProductsService extends BaseHttpService {
       .catch(this.handlerError);
   }
 
-  getProducts(params?: Object): Observable<IServerResponseList> {
+  getProducts(params?: Object): Observable<IServerResponseList<Product>> {
     return this.authHttp.get(
       this.makeUrl('products'),
       {search: this.fetchQueryParams(params)}
@@ -71,7 +71,7 @@ export class ProductsService extends BaseHttpService {
 
   // PRODUCT ENTRIES
 
-  getProductEntries(params?: Object): Observable<IServerResponseList> {
+  getProductEntries(params?: Object): Observable<IServerResponseList<ProductEntry>> {
     return this.authHttp.get(
       this.makeUrl('products-entries'),
       {search: this.fetchQueryParams(params)}

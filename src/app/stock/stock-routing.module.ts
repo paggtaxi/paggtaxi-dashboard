@@ -33,6 +33,13 @@ const routes: Routes = [
         }
       },
       {
+        path: 'entradas-produtos/:productId',
+        component: ListProductEntryComponent,
+        data: {
+          title: 'Entradas de Produtos'
+        }
+      },
+      {
         path: 'adicionar-produto',
         component: AddProductsComponent,
         data: {

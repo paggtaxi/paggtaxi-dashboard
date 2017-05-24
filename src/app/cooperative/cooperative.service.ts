@@ -5,6 +5,7 @@ import { AppSettings } from "../app-settings";
 import { IServerResponseList } from "../shared/interfaces/server-response";
 import { BaseHttpService } from "../shared/http/base-http-service";
 import { Observable } from "rxjs";
+import { TaxiDriver } from "../shared/models/taxi-driver.model";
 
 @Injectable()
 export class CooperativeService extends BaseHttpService {
@@ -15,7 +16,7 @@ export class CooperativeService extends BaseHttpService {
   }
 
   // PRODUCT
-  getDrivers(params?: Object): Observable<IServerResponseList> {
+  getDrivers(params?: Object): Observable<IServerResponseList<TaxiDriver>> {
     return this.authHttp.get(
       this.makeUrl('taxi-drivers'),
       {search: this.fetchQueryParams(params)}

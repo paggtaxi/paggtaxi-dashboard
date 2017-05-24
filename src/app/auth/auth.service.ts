@@ -5,6 +5,7 @@ import "rxjs/add/operator/toPromise";
 import { Http } from "@angular/http";
 import { AppSettings } from "../app-settings";
 import { User } from "../shared/models/user.model";
+import { map } from "rxjs/operator/map";
 
 @Injectable()
 export class AuthService {
@@ -18,12 +19,14 @@ export class AuthService {
       username: username,
       password: password
     })
+      .map((response) => {
+        return response.json();
+      })
       .toPromise()
       .then((response) => {
-        let responseJson = response.json();
-        this.setToken(responseJson.token);
-        this.setUser(responseJson.user);
-        return responseJson;
+        this.setToken(response.token);
+        this.setUser(response.user);
+        return response;
       })
       .catch((error) => {
         return Promise.reject(error.message || error);
@@ -34,12 +37,14 @@ export class AuthService {
     this.http.post(`${AppSettings.API_ENDPOINT}${AppSettings.API_REFRESH_TOKEN}`, {
       token: this.getToken()
     })
+      .map((response) => {
+        return response.json();
+      })
       .toPromise()
       .then((response) => {
-        let responseJson = response.json();
-        this.setToken(responseJson.token);
-        this.setUser(responseJson.user);
-        return responseJson;
+        this.setToken(response.token);
+        this.setUser(response.user);
+        return response;
       })
       .catch((error) => {
         return Promise.reject(error.message || error);
