@@ -42,7 +42,7 @@
                                 </div>
                             </div>
                             <div *ngIf="form.controls['product_id'].value">
-                                <div class="row" *ngFor="let item of createRange(countInputs)">
+                                <div class="row" *ngFor="let item of _createRange(countInputs)">
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label for="item_id_{{item}}">{{item}} - Código de identificação</label>

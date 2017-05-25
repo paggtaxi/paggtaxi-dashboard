@@ -7,6 +7,7 @@ import { APIGetParams } from "./interfaces/http-services.interface";
 import { ActivatedRoute, Params } from "@angular/router";
 import { Subscription } from "rxjs/Subscription";
 import { isEmpty } from "../utils";
+import * as moment from "moment";
 
 export class BaseListView<T> extends LoadingView implements OnInit, OnDestroy {
 
@@ -20,7 +21,9 @@ export class BaseListView<T> extends LoadingView implements OnInit, OnDestroy {
   params: APIGetParams = {
     page_size: 10,
     page: 1,
-    disable_date_filter: false
+    disable_date_filter: false,
+    end_date: Utils.formatDateUrl(moment()),
+    start_date: Utils.formatDateUrl(moment().subtract(7, 'days'))
   };
 
   constructor(protected route: ActivatedRoute) {
@@ -39,6 +42,8 @@ export class BaseListView<T> extends LoadingView implements OnInit, OnDestroy {
     } else {
       this.route.queryParams.subscribe(
         (params: Params) => {
+          console.log("queryParams");
+          console.log(params);
           let requestParams = {};
           for (let param in params) {
             if (this.addedQueryParams.indexOf(param) !== -1) {

@@ -4,7 +4,7 @@ import { ProductsService } from "../products.service";
 import { Observable } from "rxjs";
 import { IServerResponseList } from "../../shared/interfaces/server-response";
 import { ProductEntry } from "../stock.models";
-import { ActivatedRoute, Params } from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   templateUrl: './list-product-entry.component.html'
@@ -15,7 +15,7 @@ export class ListProductEntryComponent extends BaseListView<ProductEntry> implem
 
   constructor(private productsService: ProductsService, protected route: ActivatedRoute) {
     super(route);
-    this.setQueryParams(['product']);
+    this.setQueryParams(['product_id']);
   }
 
   request(): Observable<IServerResponseList<ProductEntry>> {

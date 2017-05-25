@@ -31,6 +31,7 @@ export class ProductItem {
   product: {
     id: number;
     name: string;
+    price: number;
   };
   item_id: string;
   observation: string;
@@ -52,6 +53,7 @@ export class ProductEntry {
   observation: string;
   who_created: CooperativeUser;
   who_created_id: number;
+  amount: number;
   product_item: ProductItem;
   product: {
     id: number;

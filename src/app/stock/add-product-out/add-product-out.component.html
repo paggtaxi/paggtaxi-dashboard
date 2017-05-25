@@ -13,67 +13,168 @@
 
                 <form [formGroup]="form" novalidate (ngSubmit)="submit(form.value, form.valid)">
                     <div class="card-block">
+
                         <list-errors [errors]="form.errors"></list-errors>
+
                         <fieldset [disabled]="isLoading() || isLoading('drivers')">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="item_id">Código de identificação</label>
-                                        <input type="text" class="form-control" id="item_id"
-                                               formControlName="item_id">
-                                        <list-errors [errors]="form.controls['item_id'].errors"></list-errors>
+                            <h5 class="text-gray-dark">Produto</h5>
+                            <div class="padding">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="item_id">Código de identificação</label>
+                                            <input type="text" class="form-control" id="item_id"
+                                                   formControlName="item_id">
+                                            <list-errors
+                                                    *ngIf="form.controls['item_id'].dirty || submitted"
+                                                    [errors]="form.controls['item_id'].errors"></list-errors>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>Produto</label>
-                                        <select2
-                                                [data]="productList"
-                                                [class.input-loading]="isLoading('products')"
-                                                [disabled]="!productList.length || isLoading('products')"
-                                                (valueChanged)="selectedProduct($event)"
-                                        ></select2>
-                                        <list-errors [errors]="form.controls['product_id'].errors"></list-errors>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>Taxista</label>
-                                        <select2
-                                                [data]="driverList"
-                                                [class.input-loading]="isLoading('drivers')"
-                                                [disabled]="!driverList.length || isLoading('drivers')"
-                                                (valueChanged)="selectedDriver($event)"
-                                        ></select2>
-                                        <list-errors [errors]="form.controls['driver_id'].errors"></list-errors>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>Produto</label>
+                                            <input type="text" class="form-control"
+                                                   [class.input-loading]="isLoading('products')"
+                                                   readonly
+                                                   value="{{currentProduct?.name || '...'}}">
+                                            <list-errors
+                                                    *ngIf="form.controls['product_id'].dirty || submitted"
+                                                    [errors]="form.controls['product_id'].errors"></list-errors>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>Data de saída</label>
-                                        <p-calendar [(ngModel)]="dt"
-                                                    [dateFormat]="datePickerFormat"
-                                                    [monthNavigator]="true"
-                                                    [inputStyleClass]="'form-control'"
-                                                    [maxDate]="maxDt"
-                                                    [locale]="datePickerLocale"
-                                                    [ngModelOptions]="{standalone: true}"></p-calendar>
+                            <hr>
+                            <list-errors *ngIf="limitAmount === 0"
+                                         [errors]="['Produto em falta no estoque']"></list-errors>
+
+                            <div *ngIf="limitAmount">
+                                <h5 class="text-gray-dark">Dados da Venda</h5>
+                                <div class="padding">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label>Taxista</label>
+                                                <select2
+                                                        [data]="driverList"
+                                                        [class.input-loading]="isLoading('drivers')"
+                                                        [disabled]="!driverList.length || isLoading('drivers')"
+                                                        (valueChanged)="selectedDriver($event)"
+                                                ></select2>
+                                                <list-errors
+                                                        *ngIf="form.controls['driver_id'].dirty || submitted"
+                                                        [errors]="form.controls['driver_id'].errors"></list-errors>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label>Data de saída</label>
+                                                <p-calendar [(ngModel)]="dt"
+                                                            [dateFormat]="datePickerFormat"
+                                                            [monthNavigator]="true"
+                                                            [inputStyleClass]="'form-control'"
+                                                            [maxDate]="maxDt"
+                                                            [locale]="datePickerLocale"
+                                                            [ngModelOptions]="{standalone: true}"></p-calendar>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label for="amount">Quantidade</label>
+                                                <select class="form-control" id="amount" formControlName="amount">
+                                                    <option value="{{item}}"
+                                                            *ngFor="let item of _createRange(limitAmount)">
+                                                        {{item}}
+                                                    </option>
+                                                </select>
+                                                <list-errors
+                                                        *ngIf="form.controls['amount'].dirty || submitted"
+                                                        [errors]="form.controls['amount'].errors"></list-errors>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label for="installment">Parcelas</label>
+                                                <select class="form-control" id="installment"
+                                                        formControlName="installment">
+                                                    <option value="{{item}}"
+                                                            *ngFor="let item of _createRange(limitInstallment)">
+                                                        {{item}}
+                                                    </option>
+                                                </select>
+                                                <list-errors
+                                                        *ngIf="form.controls['installment'].dirty || submitted"
+                                                        [errors]="form.controls['installment'].errors"></list-errors>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label>Data inicial da cobrança</label>
+                                                <p-calendar [(ngModel)]="initialBillingDate"
+                                                            [dateFormat]="datePickerFormat"
+                                                            [monthNavigator]="true"
+                                                            [disabled]="form.controls['billing_next_monday'].value"
+                                                            [inputStyleClass]="'form-control'"
+                                                            [maxDate]="maxDtInitialBillingDate"
+                                                            [minDate]="minDtInitialBillingDate"
+                                                            [locale]="datePickerLocale"
+                                                            [ngModelOptions]="{standalone: true}"></p-calendar>
+                                                <list-errors
+                                                        *ngIf="form.controls['initial_billing_date'].dirty || submitted"
+                                                        [errors]="form.controls['initial_billing_date'].errors"></list-errors>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label for="billing_next_monday">Próxima segunda-feira</label>
+                                            <div class="clearfix"></div>
+                                            <label id="billing_next_monday"
+                                                   class="switch switch-text switch-pill switch-primary">
+                                                <input type="checkbox" class="switch-input"
+                                                       formControlName="billing_next_monday">
+                                                <span class="switch-label" data-on="sim" data-off="não"></span>
+                                                <span class="switch-handle"></span>
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </fieldset>
+                        <hr>
+                        <fieldset *ngIf="limitAmount">
+                            <h5 class="text-gray-dark">Resumo</h5>
+                            <div class="padding">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>Preço unitário</th>
+                                        <th>Total</th>
+                                        <th>Parcela</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="content-big-text">
+                                        <td>{{ buyData().unitPrice | currencyFormat }}</td>
+                                        <td>{{ buyData().total | currencyFormat }}</td>
+                                        <td>{{ buyData().parcelPrice | currencyFormat }}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </fieldset>
                     </div>
-                    <div class="card-footer">
+                    <div class="card-footer" *ngIf="limitAmount">
                         <button type="button"
                                 (click)="submit(form.value, form.valid, false)"
-                                [disabled]="isLoading()"
+                                [disabled]="isLoadingAny()"
                                 class="btn btn-sm btn-primary btn-ladda"
                                 name="submit"
                                 [ladda]='isLoading()'>

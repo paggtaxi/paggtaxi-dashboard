@@ -462,9 +462,23 @@ p-calendar {
   }
 }
 
-
 .ui-select-match-text {
   width: 90%;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.badge {
+  font-size: 100%;
+}
+
+.padding {
+  padding: 15px;
+}
+
+.content-big-text {
+  font-size: 120%;
+  * {
+    font-size: 120%;
+  }
 }

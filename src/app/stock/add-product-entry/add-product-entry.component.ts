@@ -13,6 +13,7 @@ import { AuthService } from "../../auth/auth.service";
 import { Modal } from "angular2-modal/plugins/bootstrap";
 import { Overlay } from "angular2-modal";
 import setPrototypeOf = Reflect.setPrototypeOf;
+import { createRange } from "../../utils";
 
 @Component({
   templateUrl: 'add-product-entry.component.html'
@@ -92,7 +93,9 @@ export class AddProductEntryComponent extends LoadingView implements OnInit {
 
   getProductSelectItems() {
     this.setLoading('products', true);
-    this.productsService.getProducts(AppSettings.LARGE_PAGE_RESULTS).subscribe(
+    let params: any = AppSettings.LARGE_PAGE_RESULTS;
+    params.is_active = true;
+    this.productsService.getProducts(params).subscribe(
       (response) => {
         this.setProductList(response.results);
         this.setLoading('products', false);
@@ -102,12 +105,8 @@ export class AddProductEntryComponent extends LoadingView implements OnInit {
     );
   }
 
-  createRange(number) {
-    let items: number[] = [];
-    for (let i = 1; i <= number; i++) {
-      items.push(i);
-    }
-    return items;
+  _createRange(number) {
+    return createRange(number);
   }
 
   cancelAndChangeProduct() {

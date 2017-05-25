@@ -44,6 +44,18 @@ export class LoadingView extends BaseView implements AbstractLoadingView, OnInit
     return this.loading;
   }
 
+  isLoadingAny() {
+    if (this.loading) {
+      return true;
+    }
+    for (let item in this.loadingItems) {
+      if (this.loadingItems[item] === true) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   private isLoadingItem(loadingId: string) {
     if (!this.loadingItems.hasOwnProperty(loadingId)) {
       // throw new Error("Before check if a item is loading ensure than start loading.")

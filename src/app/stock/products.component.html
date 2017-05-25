@@ -51,7 +51,9 @@
                                     <td>
                                         <a href [routerLink]="['/estoque/editar-produto', item.id]"
                                            class="btn btn-link"><i class="fa fa-edit"></i> editar</a>
-                                        <a href [routerLink]="['/estoque/produtos/entradas-produtos', item.id]"
+                                        <a href
+                                           [routerLink]="['/estoque/entradas-produtos']"
+                                           [queryParams]="{ product_id: item.id }"
                                            class="btn btn-link"><i class="fa fa-download"></i> entradas</a>
                                         <a href class="btn btn-link"><i class="fa fa-upload"></i> saídas</a>
                                     </td>

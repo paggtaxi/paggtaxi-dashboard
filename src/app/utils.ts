@@ -28,6 +28,14 @@ export function isEmpty(value: any): boolean {
   throw new Error(`this methods expects a Object, Array o String instance, received a ${value.constructor.name}`)
 }
 
+export function createRange(number: number): number[] {
+  let items: number[] = [];
+  for (let i = 1; i <= number; i++) {
+    items.push(i);
+  }
+  return items;
+}
+
 export class FormHelper {
 
 }

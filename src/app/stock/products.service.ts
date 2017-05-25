@@ -5,7 +5,7 @@ import { AppSettings } from "../app-settings";
 import { IServerResponseIdName, IServerResponseList } from "../shared/interfaces/server-response";
 import { BaseHttpService } from "../shared/http/base-http-service";
 import { Observable } from "rxjs";
-import { Product, ProductEntry } from "./stock.models";
+import { Product, ProductEntry, ProductItem } from "./stock.models";
 import { Moment } from "moment";
 import { Utils } from "../shared/utils";
 
@@ -14,6 +14,10 @@ export interface IDataCreateOutput {
   item_id: number;
   driver_id: number;
   date_output: Date | Moment;
+  amount: number;
+  installment: number;
+  initial_billing_date: Date | Moment;
+  billing_next_monday: boolean;
 }
 
 @Injectable()
@@ -37,6 +41,15 @@ export class ProductsService extends BaseHttpService {
   getProducts(params?: Object): Observable<IServerResponseList<Product>> {
     return this.authHttp.get(
       this.makeUrl('products'),
+      {search: this.fetchQueryParams(params)}
+    )
+      .map((response: Response) => response.json())
+      .catch(this.handlerError);
+  }
+
+  getProductItems(params?: Object): Observable<IServerResponseList<ProductItem>> {
+    return this.authHttp.get(
+      this.makeUrl('product-items'),
       {search: this.fetchQueryParams(params)}
     )
       .map((response: Response) => response.json())
@@ -101,7 +114,11 @@ export class ProductsService extends BaseHttpService {
         product_id: data.product,
         item_id: data.item_id,
         driver_id: data.driver_id,
-        date_output: Utils.formatDateBody(data.date_output)
+        date_output: Utils.formatDateBody(data.date_output),
+        amount: data.amount,
+        installment: data.installment,
+        initial_billing_date: Utils.formatDateBody(data.initial_billing_date),
+        billing_next_monday: data.billing_next_monday,
       }
     )
       .map((response: Response) => response.json())
