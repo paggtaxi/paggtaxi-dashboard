@@ -33,10 +33,12 @@
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label>Produto</label>
-                                            <input type="text" class="form-control"
-                                                   [class.input-loading]="isLoading('products')"
-                                                   readonly
-                                                   value="{{currentProduct?.name || '...'}}">
+                                            <select2
+                                                    [data]="productList"
+                                                    [class.input-loading]="isLoading('products')"
+                                                    [disabled]="!productList.length || isLoading('products')"
+                                                    (valueChanged)="selectedProduct($event)"
+                                            ></select2>
                                             <list-errors
                                                     *ngIf="form.controls['product_id'].dirty || submitted"
                                                     [errors]="form.controls['product_id'].errors"></list-errors>
@@ -49,7 +51,7 @@
                             <list-errors *ngIf="limitAmount === 0"
                                          [errors]="['Produto em falta no estoque']"></list-errors>
 
-                            <div *ngIf="limitAmount">
+                            <div *ngIf="canShowBuyForm()">
                                 <h5 class="text-gray-dark">Dados da Venda</h5>
                                 <div class="padding">
                                     <div class="row">
@@ -149,7 +151,7 @@
                             </div>
                         </fieldset>
                         <hr>
-                        <fieldset *ngIf="limitAmount">
+                        <fieldset *ngIf="canShowBuyForm()">
                             <h5 class="text-gray-dark">Resumo</h5>
                             <div class="padding">
                                 <table class="table">
@@ -171,7 +173,7 @@
                             </div>
                         </fieldset>
                     </div>
-                    <div class="card-footer" *ngIf="limitAmount">
+                    <div class="card-footer" *ngIf="canShowBuyForm()">
                         <button type="button"
                                 (click)="submit(form.value, form.valid, false)"
                                 [disabled]="isLoadingAny()"

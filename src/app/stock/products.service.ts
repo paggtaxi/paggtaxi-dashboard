@@ -20,6 +20,14 @@ export interface IDataCreateOutput {
   billing_next_monday: boolean;
 }
 
+export interface IDataCreateConsignment {
+  product: number;
+  item_id: string;
+  driver: number;
+  date_return: Date | Moment;
+  observation: string;
+}
+
 @Injectable()
 export class ProductsService extends BaseHttpService {
 
@@ -125,7 +133,26 @@ export class ProductsService extends BaseHttpService {
       .catch(this.handlerError);
   }
 
+  // PRODUCT CONSIGNMENT
+
+  createConsignment(data: IDataCreateConsignment): Observable<Product> {
+    return this.authHttp.post(
+      this.makeUrl('add-consignment'),
+      {
+        product: data.product,
+        item_id: data.item_id,
+        driver: data.driver,
+        date_return: Utils.formatDateBody(data.date_return),
+        observation: data.observation
+      }
+    )
+      .map((response: Response) => response.json())
+      .catch(this.handlerError);
+  }
+
   handlerError(error): Observable<any> {
+    console.log("handlerError");
+    console.log(error);
     return Observable.throw(error.json() || 'Server error without message');
   }
 

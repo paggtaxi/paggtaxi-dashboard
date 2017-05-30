@@ -1,0 +1,116 @@
+<div class="animated fadeIn">
+
+    <stock-menu></stock-menu>
+
+    <hr>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-plus"></i> Adicionar <strong>Comodato de Produto</strong>
+                </div>
+
+                <form [formGroup]="form" novalidate (ngSubmit)="submit(form.value, form.valid)">
+                    <div class="card-block">
+
+                        <list-errors [errors]="form.errors"></list-errors>
+
+                        <fieldset [disabled]="isLoading() || isLoading('drivers')">
+                            <h5 class="text-gray-dark">Produto</h5>
+                            <div class="padding">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="item_id">Código de identificação</label>
+                                            <input type="text" class="form-control" id="item_id"
+                                                   formControlName="item_id">
+                                            <list-errors
+                                                    *ngIf="form.controls['item_id'].dirty || submitted"
+                                                    [errors]="form.controls['item_id'].errors"></list-errors>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>Produto</label>
+                                            <select2
+                                                    [data]="productList"
+                                                    [class.input-loading]="isLoading('products')"
+                                                    [disabled]="!productList.length || isLoading('products')"
+                                                    (valueChanged)="selectedProduct($event)"
+                                            ></select2>
+                                            <list-errors
+                                                    *ngIf="form.controls['product_id'].dirty || submitted"
+                                                    [errors]="form.controls['product_id'].errors"></list-errors>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr>
+                            <list-errors *ngIf="limitAmount === 0"
+                                         [errors]="['Produto em falta no estoque']"></list-errors>
+
+                            <div *ngIf="canShowBuyForm()">
+                                <h5 class="text-gray-dark">Dados do comodato</h5>
+                                <div class="padding">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label>Taxista</label>
+                                                <select2
+                                                        [data]="driverList"
+                                                        [class.input-loading]="isLoading('drivers')"
+                                                        [disabled]="!driverList.length || isLoading('drivers')"
+                                                        (valueChanged)="selectedDriver($event)"
+                                                ></select2>
+                                                <list-errors
+                                                        *ngIf="form.controls['driver_id'].dirty || submitted"
+                                                        [errors]="form.controls['driver_id'].errors"></list-errors>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label>Data de retorno</label>
+                                                <p-calendar [(ngModel)]="dateReturn"
+                                                            [dateFormat]="datePickerFormat"
+                                                            [monthNavigator]="true"
+                                                            [inputStyleClass]="'form-control'"
+                                                            [maxDate]="minDt"
+                                                            [locale]="datePickerLocale"
+                                                            [ngModelOptions]="{standalone: true}"></p-calendar>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <label>Observação</label>
+                                            <textarea class="form-control" name="observation"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </fieldset>
+
+                        <hr>
+                    </div>
+                    <div class="card-footer" *ngIf="canShowBuyForm()">
+                        <button type="button"
+                                (click)="submit(form.value, form.valid, false)"
+                                [disabled]="isLoadingAny()"
+                                class="btn btn-sm btn-primary btn-ladda"
+                                name="submit"
+                                [ladda]='isLoading()'>
+                            <i class="fa fa-floppy-o"></i> Salvar
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+        <!--/.col-->
+    </div>
+
+    <!--/.row-->
+</div>

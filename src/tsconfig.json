@@ -9,6 +9,7 @@
       "dom"
     ],
     "mapRoot": "./",
+    "inlineSources": true,
     "module": "es2016",
     "moduleResolution": "node",
     "outDir": "../dist/out-tsc",

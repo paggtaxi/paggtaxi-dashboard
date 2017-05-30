@@ -5,6 +5,7 @@ import { AddProductsComponent } from "./add-products/add-products.component";
 import { ListProductEntryComponent } from "./list-product-entry/list-product-entry.component";
 import { AddProductEntryComponent } from "./add-product-entry/add-product-entry.component";
 import { AddProductOutComponent } from "./add-product-out/add-product-out.component";
+import { AddProductConsignment } from "./add-product-consignment/add-product-consignment";
 
 const routes: Routes = [
   {
@@ -65,6 +66,13 @@ const routes: Routes = [
         component: AddProductOutComponent,
         data: {
           title: 'Adicionar Saída de Produto'
+        }
+      },
+      {
+        path: 'adicionar-comodato',
+        component: AddProductConsignment,
+        data: {
+          title: 'Adicionar Comodato'
         }
       }
     ]

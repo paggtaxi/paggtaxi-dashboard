@@ -50,7 +50,6 @@ export class ListErrorsComponent {
   @Input()
   set errors(errorList: any) {
     this._errors = [];
-    console.log(errorList);
     if (errorList instanceof Array) {
       this._errors = errorList;
       return;

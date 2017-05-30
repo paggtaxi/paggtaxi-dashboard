@@ -6,11 +6,15 @@ import { CommonModule } from "@angular/common";
 import { AuthRoutingModule } from "./auth.rounting";
 import { FormsModule }   from '@angular/forms';
 import { LaddaModule } from "angular2-ladda";
+import { AuthHttpInterceptor } from "../shared/http-interceptor";
+import { Router } from "@angular/router";
+import { ToasterService } from "angular2-toaster";
 
-export function authHttpServiceFactory(http: Http, options: RequestOptions) {
-  return new AuthHttp(new AuthConfig({
+export function authHttpServiceFactory(http: Http, options: RequestOptions, router: Router,
+                                       toasterService: ToasterService) {
+  return new AuthHttpInterceptor(new AuthConfig({
     globalHeaders: [{'Content-Type': 'application/json'}],
-  }), http, options);
+  }), http, router, toasterService, options);
 }
 @NgModule({
   imports: [
@@ -26,7 +30,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     {
       provide: AuthHttp,
       useFactory: authHttpServiceFactory,
-      deps: [Http, RequestOptions]
+      deps: [Http, RequestOptions, Router, ToasterService]
     }
   ]
 })

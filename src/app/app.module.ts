@@ -1,6 +1,6 @@
-import { NgModule, LOCALE_ID, isDevMode } from "@angular/core";
+import { isDevMode, LOCALE_ID, NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
-import { LocationStrategy, HashLocationStrategy } from "@angular/common";
+import { HashLocationStrategy, LocationStrategy } from "@angular/common";
 import { AppComponent } from "./app.component";
 import { BsDropdownModule } from "ngx-bootstrap";
 import { TabsModule } from "ngx-bootstrap/tabs";
@@ -28,10 +28,10 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { ToasterModule } from "angular2-toaster";
 import { CooperativeModule } from "./cooperative/cooperative.module";
 import { AppLocale } from "./shared/locale";
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 
-import { NgLoggerModule, Level } from '@nsalaun/ng-logger';
+import { Level, NgLoggerModule } from "@nsalaun/ng-logger";
 import { AuthenticatedHttpService } from "app/shared/http-interceptor";
 import { p404Component } from "./shared/components/error-pages/404.component";
 import { p500Component } from "app/shared/components/error-pages/500.component";

@@ -19,6 +19,7 @@ import { BootstrapModalModule } from "angular2-modal/plugins/bootstrap";
 import { AddProductOutComponent } from './add-product-out/add-product-out.component';
 import { Select2Module } from 'ng2-select2';
 import { DatepickerModule } from "ngx-bootstrap";
+import { AddProductConsignment } from "./add-product-consignment/add-product-consignment";
 
 @NgModule({
   imports: [
@@ -39,12 +40,14 @@ import { DatepickerModule } from "ngx-bootstrap";
     AddProductsComponent,
     ListProductEntryComponent,
     AddProductEntryComponent,
+    AddProductConsignment,
     AddProductOutComponent
   ],
   exports: [
     StockProductsComponent,
     AddProductsComponent,
     AddProductEntryComponent,
+    AddProductConsignment,
     AddProductOutComponent
   ],
   providers: [
